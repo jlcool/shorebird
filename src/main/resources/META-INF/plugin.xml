@@ -6,13 +6,16 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.jlcool.shorebird.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.jlcool.shorebird.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <depends>io.flutter</depends>
+    <actions>
+        <!-- Add your actions here -->
+        <action id="FlutterCodePush"
+            class="com.github.jlcool.shorebird.actions.CodePushAction"
+            text="Code Push"
+            description="flutter code push"
+            icon="AllIcons.Actions.StepOut">
+            <add-to-group group-id="MainToolbarRight" anchor="before" relative-to-action="RunClass"/>
+            <add-to-group group-id="ToolbarRunGroup" anchor="before" relative-to-action="RunClass"/>
+        </action>
+    </actions>
 </idea-plugin>
