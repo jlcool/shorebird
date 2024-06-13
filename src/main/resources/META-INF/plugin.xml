@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>com.github.jlcool.shorebird</id>
     <name>shorebird</name>
-    <vendor>jlcool</vendor>
+    <vendor>姜亮</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 

@@ -106,8 +106,8 @@ tasks {
     }
 
     signPlugin {
-        certificateChain = environment("CERTIFICATE_CHAIN")
-        privateKey = environment("PRIVATE_KEY")
+        certificateChainFile  = file("D:\\OneDrive\\Projects\\chain.crt")
+        privateKeyFile = file("D:\\OneDrive\\Projects\\private.pem")
         password = environment("PRIVATE_KEY_PASSWORD")
     }
 
