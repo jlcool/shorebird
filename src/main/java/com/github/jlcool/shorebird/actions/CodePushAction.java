@@ -80,23 +80,6 @@ public class CodePushAction extends AnAction {
                             commandLine.addParameter("--artifact");
                             commandLine.addParameter("apk");
                         }
-                        if(!dialog.isUploadToShorebird()) {
-                            commandLine.addParameter("--n");
-                        }
-                        // 检查flavor是否不为空或特定条件满足
-                        if (flavor != null && !flavor.isEmpty()) {
-                            // 添加flavor参数到命令列表
-                            commandLine.addParameter("--flavor");
-                            commandLine.addParameter(flavor);
-                        }
-                        if (filePath != null && !filePath.isEmpty()) {
-                            commandLine.addParameter("--target");
-                            commandLine.addParameter(filePath);
-                        }
-                        if (additionalArgs != null && !additionalArgs.isEmpty()) {
-                            commandLine.addParameter(additionalArgs);
-                        }
-
                         if(!Objects.equals(dialog.getFlutterVersion(), "")){
                             commandLine.addParameter("--flutter-version");
                             commandLine.addParameter(dialog.getFlutterVersion());
@@ -105,6 +88,26 @@ public class CodePushAction extends AnAction {
                             commandLine.addParameter("--release-version");
                             commandLine.addParameter(dialog.getFlutterVersion());
                         }
+                        if(!dialog.isUploadToShorebird()) {
+                            commandLine.addParameter("-n");
+                        }
+                        if (additionalArgs != null && !additionalArgs.isEmpty()) {
+                            commandLine.addParameter(additionalArgs);
+                        }
+                        if (filePath != null && !filePath.isEmpty()) {
+                            commandLine.addParameter("--t");
+                            commandLine.addParameter(filePath);
+                        }
+                        // 检查flavor是否不为空或特定条件满足
+                        if (flavor != null && !flavor.isEmpty()) {
+                            // 添加flavor参数到命令列表
+                            commandLine.addParameter("--flavor");
+                            commandLine.addParameter(flavor);
+                        }
+
+
+
+
                     }
                     commandLine.setWorkDirectory(project.getBasePath());
 
@@ -141,6 +144,7 @@ public class CodePushAction extends AnAction {
                                     } else {
                                         System.err.println("Flutter build failed with exit code: " + exitCode);
                                     }
+                                    handler.destroyProcess();
                                 }
                             });
 
