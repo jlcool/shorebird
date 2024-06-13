@@ -1,5 +1,7 @@
 package com.github.jlcool.shorebird.actions;
 
+import static com.github.jlcool.shorebird.services.PgyUpload.uploadApk;
+
 import com.github.jlcool.shorebird.ui.MyDialog;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.RunnerAndConfigurationSettings;
@@ -17,6 +19,8 @@ import com.intellij.ui.content.ContentManagerEvent;
 import com.intellij.ui.content.MessageView;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import io.flutter.console.FlutterConsoles;
 import io.flutter.pub.PubRoot;
@@ -59,19 +63,48 @@ public class CodePushAction extends AnAction {
                     GeneralCommandLine commandLine = new GeneralCommandLine();
                     commandLine.withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE);
                     commandLine.setExePath("shorebird.bat");
-                    commandLine.addParameter("release");
-                    commandLine.addParameter(dialog.getTypeRadio());
-
-                    commandLine.addParameter("--release");
-
-                    // 检查flavor是否不为空或特定条件满足
-                    if (flavor != null && !flavor.isEmpty()) {
-                        // 添加flavor参数到命令列表
-                        commandLine.addParameter("--flavor");
-                        commandLine.addParameter(flavor);
+                    String command=dialog.getCommandRadio();
+                    if(Objects.equals(command, "reinit")){
+                        commandLine.addParameter("init");
+                        commandLine.addParameter("--force");
+                    }else {
+                        commandLine.addParameter(command);
                     }
-                    if (additionalArgs != null && !additionalArgs.isEmpty()) {
-                        commandLine.addParameter(additionalArgs);
+                    if(!command.equals("init") && !command.equals("reinit")) {
+                        commandLine.addParameter(dialog.getTypeRadio());
+
+                        if(dialog.isStaging()) {
+                            commandLine.addParameter("--staging");
+                        }
+                        if(dialog.isArtifact()) {
+                            commandLine.addParameter("--artifact");
+                            commandLine.addParameter("apk");
+                        }
+                        if(!dialog.isUploadToShorebird()) {
+                            commandLine.addParameter("--n");
+                        }
+                        // 检查flavor是否不为空或特定条件满足
+                        if (flavor != null && !flavor.isEmpty()) {
+                            // 添加flavor参数到命令列表
+                            commandLine.addParameter("--flavor");
+                            commandLine.addParameter(flavor);
+                        }
+                        if (filePath != null && !filePath.isEmpty()) {
+                            commandLine.addParameter("--target");
+                            commandLine.addParameter(filePath);
+                        }
+                        if (additionalArgs != null && !additionalArgs.isEmpty()) {
+                            commandLine.addParameter(additionalArgs);
+                        }
+
+                        if(!Objects.equals(dialog.getFlutterVersion(), "")){
+                            commandLine.addParameter("--flutter-version");
+                            commandLine.addParameter(dialog.getFlutterVersion());
+                        }
+                        if (!Objects.equals(dialog.getReleaseVersion(), "")){
+                            commandLine.addParameter("--release-version");
+                            commandLine.addParameter(dialog.getFlutterVersion());
+                        }
                     }
                     commandLine.setWorkDirectory(project.getBasePath());
 
@@ -81,6 +114,7 @@ public class CodePushAction extends AnAction {
                         com.intellij.openapi.module.Module module = pubRoot.getModule(project);
                         if (module != null) {
                             FlutterConsoles.displayProcessLater(handler, module.getProject(), module, handler::startNotify);
+
                             MessageView messageView =MessageView.getInstance(event.getProject());
                             //如果编译窗口关闭则停止编译
                             messageView.getContentManager().addContentManagerListener(new ContentManagerAdapter() {
@@ -90,12 +124,20 @@ public class CodePushAction extends AnAction {
                                 }
                             });
 
+
                             handler.addProcessListener(new ProcessAdapter() {
                                 @Override
                                 public void processTerminated(@NotNull ProcessEvent event) {
                                     int exitCode = event.getExitCode();
                                     if (exitCode == 0) {
+                                        String pathname=project.getBasePath() + "/build/app/outputs/flutter-apk/app" + (flavor != null && !flavor.isEmpty() ? "-" : "") + flavor + "-release.apk";
+                                        if(Objects.equals(dialog.getTypeRadio(), "ios")){
+                                            pathname=project.getBasePath() + "/build/app/outputs/flutter-apk/app" + (flavor != null && !flavor.isEmpty() ? "-" : "") + flavor + "-release.apk";
+                                        }
                                         System.out.println("Flutter build completed successfully.");
+                                        if(dialog.isUploadToPgy()) {
+                                            uploadApk(pathname, project, module, dialog);
+                                        }
                                     } else {
                                         System.err.println("Flutter build failed with exit code: " + exitCode);
                                     }
