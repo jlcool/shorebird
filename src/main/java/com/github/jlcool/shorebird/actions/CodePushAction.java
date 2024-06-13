@@ -95,7 +95,7 @@ public class CodePushAction extends AnAction {
                             commandLine.addParameter(additionalArgs);
                         }
                         if (filePath != null && !filePath.isEmpty()) {
-                            commandLine.addParameter("--t");
+                            commandLine.addParameter("-t");
                             commandLine.addParameter(filePath);
                         }
                         // 检查flavor是否不为空或特定条件满足

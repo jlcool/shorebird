@@ -13,7 +13,7 @@
             class="com.github.jlcool.shorebird.actions.CodePushAction"
             text="Code Push"
             description="flutter code push"
-            icon="AllIcons.Actions.StepOut">
+            icon="com.github.jlcool.shorebird.icons.ShorebirdIcons.shorebird">
             <add-to-group group-id="MainToolbarRight" anchor="before" relative-to-action="RunClass"/>
             <add-to-group group-id="ToolbarRunGroup" anchor="before" relative-to-action="RunClass"/>
         </action>
