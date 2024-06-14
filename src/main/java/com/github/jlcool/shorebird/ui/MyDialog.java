@@ -19,10 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class MyDialog  extends DialogWrapper {
     private JPanel contentPanel= new JPanel();
-
+    private JPanel shorebirdPathPanel= new JPanel();
+    private JTextField shorebirdPathField=new JTextField();
+    private JLabel shorebirdPathLabel= new JLabel("shorebird path:");
     private JPanel typePanel= new JPanel();
     private JLabel typeLabel= new JLabel("type:");
     private ButtonGroup radioTypeGroup= new ButtonGroup();
@@ -64,8 +68,36 @@ public class MyDialog  extends DialogWrapper {
     protected @Nullable JComponent createCenterPanel()
     {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        shorebirdPathPanel.setLayout(new BoxLayout(shorebirdPathPanel, BoxLayout.X_AXIS));
         typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
         commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.X_AXIS));
+
+        String shorebirdPath = PropertiesComponent.getInstance().getValue("shorebird_path", "");
+        shorebirdPathField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
+            }
+
+            // 处理文本变化的逻辑
+            private void textChanged(DocumentEvent e) {
+                PropertiesComponent.getInstance().setValue("shorebird_path", shorebirdPathField.getText());
+            }
+        });
+        shorebirdPathField.setText(shorebirdPath);
+
+        shorebirdPathPanel.add(shorebirdPathLabel);
+        shorebirdPathPanel.add(shorebirdPathField);
 
         radioButtonAPK.setActionCommand("android");
         radioButtonIOS.setActionCommand("ios");
@@ -156,8 +188,26 @@ public class MyDialog  extends DialogWrapper {
         releasePanel.add(new JLabel("flutter version:"));
         String shorebirdFlutterVersion = PropertiesComponent.getInstance().getValue("shorebird_flutter_version", "");
         flutterVersionField.setText(shorebirdFlutterVersion);
-        flutterVersionField.addActionListener(e -> {
-            PropertiesComponent.getInstance().setValue("shorebird_flutter_version", flutterVersionField.getText());
+        flutterVersionField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
+            }
+
+            // 处理文本变化的逻辑
+            private void textChanged(DocumentEvent e) {
+                PropertiesComponent.getInstance().setValue("shorebird_flutter_version", flutterVersionField.getText());
+            }
         });
         releasePanel.add(flutterVersionField);
         checkBoxArtifact.setSelected(PropertiesComponent.getInstance().getBoolean("shorebird_check_box_artifact", false));
@@ -171,8 +221,26 @@ public class MyDialog  extends DialogWrapper {
         patchPanel.add(new JLabel("release version:"));
         String shorebirdReleaseVersion = PropertiesComponent.getInstance().getValue("shorebird_release_version", "");
         releaseVersionField.setText(shorebirdReleaseVersion);
-        releaseVersionField.addActionListener(e -> {
-            PropertiesComponent.getInstance().setValue("shorebird_release_version", releaseVersionField.getText());
+        releaseVersionField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
+            }
+
+            // 处理文本变化的逻辑
+            private void textChanged(DocumentEvent e) {
+                PropertiesComponent.getInstance().setValue("shorebird_release_version", releaseVersionField.getText());
+            }
         });
         patchPanel.add(releaseVersionField);
         checkBoxStaging.setSelected(PropertiesComponent.getInstance().getBoolean("shorebird_check_box_staging", false));
@@ -221,8 +289,26 @@ public class MyDialog  extends DialogWrapper {
         apiKeyPanel.setLayout(new BoxLayout(apiKeyPanel, BoxLayout.X_AXIS));
         apiKeyPanel.add(new JLabel("Apikey:"));
         String lastApiKey = PropertiesComponent.getInstance().getValue("shorebird_pyg_api_key", "");
-        apiKeyField.addActionListener(e -> {
-            PropertiesComponent.getInstance().setValue("shorebird_pyg_api_key", apiKeyField.getText());
+        apiKeyField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
+            }
+
+            // 处理文本变化的逻辑
+            private void textChanged(DocumentEvent e) {
+                PropertiesComponent.getInstance().setValue("shorebird_pyg_api_key", apiKeyField.getText());
+            }
         });
         apiKeyField.setText(lastApiKey);
         apiKeyPanel.add(apiKeyField);
@@ -240,8 +326,26 @@ public class MyDialog  extends DialogWrapper {
         dingdingPanel.setLayout(new BoxLayout(dingdingPanel, BoxLayout.X_AXIS));
         dingdingPanel.add(new JLabel("Token:"));
         String dingToken = PropertiesComponent.getInstance().getValue("shorebird_ding_token", "");
-        dingdingTokenField.addActionListener(e -> {
-            PropertiesComponent.getInstance().setValue("shorebird_ding_token", dingdingTokenField.getText());
+        dingdingTokenField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
+            }
+
+            // 处理文本变化的逻辑
+            private void textChanged(DocumentEvent e) {
+                PropertiesComponent.getInstance().setValue("shorebird_ding_token", dingdingTokenField.getText());
+            }
         });
         dingdingTokenField.setText(dingToken);
         dingdingPanel.add(dingdingTokenField);
@@ -263,6 +367,7 @@ public class MyDialog  extends DialogWrapper {
         commandPanel.add(radioButtonReInit);
         commandPanel.add(Box.createHorizontalGlue());
 
+        contentPanel.add(shorebirdPathPanel);
         contentPanel.add(typePanel);
         contentPanel.add(commandPanel);
         contentPanel.add(releasePanel);
@@ -319,5 +424,8 @@ public class MyDialog  extends DialogWrapper {
     }
     public String getDingToken() {
         return dingdingTokenField.getText();
+    }
+    public String getShorebirdPath() {
+        return shorebirdPathField.getText();
     }
 }
