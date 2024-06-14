@@ -24,9 +24,6 @@ import javax.swing.event.DocumentListener;
 
 public class MyDialog  extends DialogWrapper {
     private JPanel contentPanel= new JPanel();
-    private JPanel shorebirdPathPanel= new JPanel();
-    private JTextField shorebirdPathField=new JTextField();
-    private JLabel shorebirdPathLabel= new JLabel("shorebird path:");
     private JPanel typePanel= new JPanel();
     private JLabel typeLabel= new JLabel("type:");
     private ButtonGroup radioTypeGroup= new ButtonGroup();
@@ -68,36 +65,8 @@ public class MyDialog  extends DialogWrapper {
     protected @Nullable JComponent createCenterPanel()
     {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        shorebirdPathPanel.setLayout(new BoxLayout(shorebirdPathPanel, BoxLayout.X_AXIS));
         typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.X_AXIS));
         commandPanel.setLayout(new BoxLayout(commandPanel, BoxLayout.X_AXIS));
-
-        String shorebirdPath = PropertiesComponent.getInstance().getValue("shorebird_path", "");
-        shorebirdPathField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                textChanged(e);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                textChanged(e);
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // 对于纯文本组件，此方法通常不需要处理，但为了完整性这里依然包含
-            }
-
-            // 处理文本变化的逻辑
-            private void textChanged(DocumentEvent e) {
-                PropertiesComponent.getInstance().setValue("shorebird_path", shorebirdPathField.getText());
-            }
-        });
-        shorebirdPathField.setText(shorebirdPath);
-
-        shorebirdPathPanel.add(shorebirdPathLabel);
-        shorebirdPathPanel.add(shorebirdPathField);
 
         radioButtonAPK.setActionCommand("android");
         radioButtonIOS.setActionCommand("ios");
@@ -367,7 +336,6 @@ public class MyDialog  extends DialogWrapper {
         commandPanel.add(radioButtonReInit);
         commandPanel.add(Box.createHorizontalGlue());
 
-        contentPanel.add(shorebirdPathPanel);
         contentPanel.add(typePanel);
         contentPanel.add(commandPanel);
         contentPanel.add(releasePanel);
@@ -424,8 +392,5 @@ public class MyDialog  extends DialogWrapper {
     }
     public String getDingToken() {
         return dingdingTokenField.getText();
-    }
-    public String getShorebirdPath() {
-        return shorebirdPathField.getText();
     }
 }
