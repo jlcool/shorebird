@@ -91,6 +91,12 @@ public class CodePushAction extends AnAction {
                         if(!dialog.isUploadToShorebird()) {
                             commandLine.addParameter("-n");
                         }
+                        // 检查flavor是否不为空或特定条件满足
+                        if (flavor != null && !flavor.isEmpty()) {
+                            // 添加flavor参数到命令列表
+                            commandLine.addParameter("--flavor");
+                            commandLine.addParameter(flavor);
+                        }
                         if (additionalArgs != null && !additionalArgs.isEmpty()) {
                             commandLine.addParameter(additionalArgs);
                         }
@@ -98,13 +104,6 @@ public class CodePushAction extends AnAction {
                             commandLine.addParameter("-t");
                             commandLine.addParameter(filePath);
                         }
-                        // 检查flavor是否不为空或特定条件满足
-                        if (flavor != null && !flavor.isEmpty()) {
-                            // 添加flavor参数到命令列表
-                            commandLine.addParameter("--flavor");
-                            commandLine.addParameter(flavor);
-                        }
-
 
 
 
