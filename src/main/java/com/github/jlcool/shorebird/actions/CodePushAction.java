@@ -59,10 +59,8 @@ public class CodePushAction extends AnAction {
                 String flavor = someField.getBuildFlavor();
                 String additionalArgs = someField.getAdditionalArgs();
                 try {
-
-                    GeneralCommandLine commandLine = new GeneralCommandLine();
-                    commandLine.withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.CONSOLE);
-                    commandLine.setExePath("shorebird.bat");
+                    String osName = System.getProperty("os.name").toLowerCase();
+                    GeneralCommandLine commandLine = new GeneralCommandLine(osName.contains("win")?"powershell.exe":"shorebird",osName.contains("win")?"shorebird":"");
                     String command=dialog.getCommandRadio();
                     if(Objects.equals(command, "reinit")){
                         commandLine.addParameter("init");
