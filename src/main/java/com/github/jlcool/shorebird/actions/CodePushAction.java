@@ -60,8 +60,13 @@ public class CodePushAction extends AnAction {
                 String additionalArgs = someField.getAdditionalArgs();
                 try {
                     String osName = System.getProperty("os.name").toLowerCase();
-                    GeneralCommandLine commandLine = new GeneralCommandLine(osName.contains("win")?"powershell.exe":"shorebird",osName.contains("win")?"shorebird":"");
+                    GeneralCommandLine commandLine = new GeneralCommandLine(osName.contains("win")?"powershell.exe":"shorebird");
+                    if(osName.contains("win"))
+                    {
+                        commandLine.addParameter("shorebird");
+                    }
                     String command=dialog.getCommandRadio();
+
                     if(Objects.equals(command, "reinit")){
                         commandLine.addParameter("init");
                         commandLine.addParameter("--force");
