@@ -3,12 +3,13 @@
     <id>com.github.jlcool.shorebird</id>
     <name>shorebird</name>
     <vendor>姜亮</vendor>
-
+    <description><![CDATA[
+Run the <a href="https://shorebird.dev">shorebird</a> command directly in the IDE, supporting login、init、release、review、patch、reinit.
+]]></description>
     <depends>com.intellij.modules.platform</depends>
 
     <depends>io.flutter</depends>
     <actions>
-        <!-- Add your actions here -->
         <action id="FlutterCodePush"
             class="com.github.jlcool.shorebird.actions.CodePushAction"
             text="Code Push"
