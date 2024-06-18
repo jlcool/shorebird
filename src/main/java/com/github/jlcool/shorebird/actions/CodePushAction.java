@@ -3,6 +3,7 @@ package com.github.jlcool.shorebird.actions;
 import static com.github.jlcool.shorebird.services.PgyUpload.uploadApk;
 
 import com.github.jlcool.shorebird.ui.MyDialog;
+import com.github.jlcool.shorebird.ui.MydialogForm;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.configurations.GeneralCommandLine;
@@ -33,7 +34,7 @@ public class CodePushAction extends AnAction {
     static  String basePath="";
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
-        MyDialog dialog = new MyDialog();
+        MydialogForm dialog = new MydialogForm();
 
         // 显示对话框
         if (dialog.showAndGet()) {
@@ -73,7 +74,7 @@ public class CodePushAction extends AnAction {
                     }else {
                         commandLine.addParameter(command);
                     }
-                    if(!command.equals("init") && !command.equals("reinit")) {
+                    if(!command.equals("login") && !command.equals("init") && !command.equals("reinit")) {
                         commandLine.addParameter(dialog.getTypeRadio());
 
                         if(dialog.isStaging()) {
@@ -91,8 +92,14 @@ public class CodePushAction extends AnAction {
                             commandLine.addParameter("--release-version");
                             commandLine.addParameter(dialog.getFlutterVersion());
                         }
-                        if(!dialog.isUploadToShorebird()) {
-                            commandLine.addParameter("-n");
+                        if(dialog.isDryRun()) {
+                            commandLine.addParameter("--dry-run");
+                        }
+                        if(dialog.isCodesignSelected())
+                        {
+                            commandLine.addParameter("--codesign");
+                        }else{
+                            commandLine.addParameter("--no-codesign");
                         }
                         // 检查flavor是否不为空或特定条件满足
                         if (flavor != null && !flavor.isEmpty()) {

@@ -1,6 +1,7 @@
 package com.github.jlcool.shorebird.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jlcool.shorebird.ui.MyDialog;
+import com.github.jlcool.shorebird.ui.MydialogForm;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RobotMessage {
-    public static void sendMessage(MyDialog dialog, boolean isAtAll,String title,String text) throws Exception {
+    public static void sendMessage(MydialogForm dialog, boolean isAtAll, String title, String text) throws Exception {
         String urlStr = "https://oapi.dingtalk.com/robot/send?access_token=" + dialog.getDingToken();
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

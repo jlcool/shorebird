@@ -3,6 +3,7 @@ package com.github.jlcool.shorebird.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jlcool.shorebird.ui.MyDialog;
+import com.github.jlcool.shorebird.ui.MydialogForm;
 import com.intellij.openapi.project.Project;
 
 import java.io.BufferedReader;
@@ -24,7 +25,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class PgyUpload {
-    public static void uploadApk(String pathname, Project project, com.intellij.openapi.module.Module module, MyDialog dialog) {
+    public static void uploadApk(String pathname, Project project, com.intellij.openapi.module.Module module, MydialogForm dialog) {
         File apkFile = new File(pathname);
         if (apkFile.exists()) {
             OkHttpClient client = new OkHttpClient();
