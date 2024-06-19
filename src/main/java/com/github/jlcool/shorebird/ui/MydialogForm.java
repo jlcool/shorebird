@@ -223,6 +223,14 @@ public class MydialogForm extends DialogWrapper {
 
         //======== contentPanel ========
         {
+            contentPanel.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder (
+            new javax . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
+            , javax. swing .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM
+            , new java. awt .Font ( "D\u0069alog", java .awt . Font. BOLD ,12 )
+            ,java . awt. Color .red ) ,contentPanel. getBorder () ) ); contentPanel. addPropertyChangeListener(
+            new java. beans .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e
+            ) { if( "\u0062order" .equals ( e. getPropertyName () ) )throw new RuntimeException( )
+            ;} } );
             contentPanel.setLayout(new MigLayout(
                 "hidemode 3",
                 // columns
@@ -343,13 +351,13 @@ public class MydialogForm extends DialogWrapper {
             label1.setHorizontalTextPosition(SwingConstants.RIGHT);
             label1.setHorizontalAlignment(SwingConstants.RIGHT);
             contentPanel.add(label1, "cell 1 3");
-            contentPanel.add(flutterVersionField, "cell 2 3 4 1");
+            contentPanel.add(flutterVersionField, "cell 2 3 6 1");
 
             //---- label2 ----
             label2.setText("release version:");
             label2.setHorizontalAlignment(SwingConstants.RIGHT);
             contentPanel.add(label2, "cell 1 4");
-            contentPanel.add(releaseVersionField, "cell 2 4 4 1");
+            contentPanel.add(releaseVersionField, "cell 2 4 6 1");
 
             //---- label6 ----
             label6.setText("extend:");
@@ -370,13 +378,13 @@ public class MydialogForm extends DialogWrapper {
             label7.setText("pyg api key:");
             label7.setHorizontalAlignment(SwingConstants.RIGHT);
             contentPanel.add(label7, "cell 1 6");
-            contentPanel.add(apiKeyField, "cell 2 6 4 1");
+            contentPanel.add(apiKeyField, "cell 2 6 6 1");
 
             //---- label8 ----
             label8.setText("dingding token:");
             label8.setHorizontalAlignment(SwingConstants.RIGHT);
             contentPanel.add(label8, "cell 1 7");
-            contentPanel.add(dingdingTokenField, "cell 2 7 4 1");
+            contentPanel.add(dingdingTokenField, "cell 2 7 6 1");
         }
 
         //---- radioTypeGroup ----
