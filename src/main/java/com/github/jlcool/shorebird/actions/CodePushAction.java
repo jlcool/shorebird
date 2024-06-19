@@ -2,7 +2,6 @@ package com.github.jlcool.shorebird.actions;
 
 import static com.github.jlcool.shorebird.services.PgyUpload.uploadApk;
 
-import com.github.jlcool.shorebird.ui.MyDialog;
 import com.github.jlcool.shorebird.ui.MydialogForm;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.RunnerAndConfigurationSettings;
@@ -15,8 +14,8 @@ import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.content.ContentManagerAdapter;
 import com.intellij.ui.content.ContentManagerEvent;
+import com.intellij.ui.content.ContentManagerListener;
 import com.intellij.ui.content.MessageView;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +24,9 @@ import java.util.Objects;
 
 import io.flutter.console.FlutterConsoles;
 import io.flutter.pub.PubRoot;
+import io.flutter.run.LaunchState;
 import io.flutter.run.SdkFields;
 import io.flutter.run.SdkRunConfig;
-import io.flutter.run.LaunchState;
 import io.flutter.sdk.FlutterSdk;
 
 public class CodePushAction extends AnAction {
@@ -129,7 +128,7 @@ public class CodePushAction extends AnAction {
 
                             MessageView messageView =MessageView.getInstance(event.getProject());
                             //如果编译窗口关闭则停止编译
-                            messageView.getContentManager().addContentManagerListener(new ContentManagerAdapter() {
+                            messageView.getContentManager().addContentManagerListener(new ContentManagerListener() {
                                 @Override
                                 public void contentRemoved(ContentManagerEvent event) {
                                     handler.destroyProcess(); // 停止正在执行的命令

@@ -11,5 +11,5 @@ public class ShorebirdIcons {
         return IconLoader.getIcon(path, ShorebirdIcons.class);
     }
 
-    public static final Icon shorebird = IconUtil.scale(load("/icons/shorebird.svg"), null, 0.5f);;
+    public static final Icon shorebird = IconUtil.scale(load("/icons/shorebird.svg"), null, 0.5f);
 }

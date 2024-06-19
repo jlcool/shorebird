@@ -37,7 +37,7 @@ public class ProgressRequestBody extends RequestBody {
 
         long read;
 
-        while ((read = source.read(sink.buffer(), 2048)) != -1) {
+        while ((read = source.read(sink.getBuffer(), 2048)) != -1) {
             totalRead += read;
             int progress = (int) ((totalRead * 100) / total);
 

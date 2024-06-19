@@ -4,18 +4,25 @@
 
 package com.github.jlcool.shorebird.ui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.ui.*;
-import com.intellij.uiDesigner.core.*;
-import net.miginfocom.swing.*;
+import com.intellij.openapi.ui.DialogWrapper;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.jetbrains.annotations.Nullable;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * @author liangjiang
