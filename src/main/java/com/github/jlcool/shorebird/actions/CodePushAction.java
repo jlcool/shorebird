@@ -140,7 +140,7 @@ public class CodePushAction extends AnAction {
                                 @Override
                                 public void processTerminated(@NotNull ProcessEvent event) {
                                     int exitCode = event.getExitCode();
-                                    if (exitCode == 0) {
+                                    if (exitCode == 0 || exitCode == 70) {
                                         String pathname=project.getBasePath() + "/build/app/outputs/flutter-apk/app" + (flavor != null && !flavor.isEmpty() ? "-" : "") + flavor + "-release.apk";
                                         if(Objects.equals(dialog.getTypeRadio(), "ios")){
                                             pathname=project.getBasePath() + "/build/app/outputs/flutter-apk/app" + (flavor != null && !flavor.isEmpty() ? "-" : "") + flavor + "-release.apk";
