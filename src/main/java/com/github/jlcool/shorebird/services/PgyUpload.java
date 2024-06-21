@@ -93,6 +93,7 @@ public class PgyUpload {
                         String buildName=jsonNode.get("data").get("buildName").asText();
                         String buildType = jsonNode.get("data").get("buildType").asInt()==1?"IOS": "Android";
                         String buildVersion=jsonNode.get("data").get("buildVersion").asText();
+                        String buildVersionNo=jsonNode.get("data").get("buildVersionNo").asText();
                         int buildBuildVersion=jsonNode.get("data").get("buildBuildVersion").asInt();
                         String buildUpdated=jsonNode.get("data").get("buildUpdated").asText();
                         int buildFileSize=jsonNode.get("data").get("buildFileSize").asInt();
@@ -104,7 +105,7 @@ public class PgyUpload {
                             if(dialog.isDingDingSelected()) {
                                 RobotMessage.sendMessage(dialog, false, "应用更新", "**应用更新提醒**\n\n应用名称：" + buildName + "\n\n" +
                                         "应用类型：" + buildType + "\n\n" +
-                                        "版本信息：" + buildVersion + "(Build " + buildBuildVersion + ")\n\n" +
+                                        "版本信息：" + buildVersion + "(Build " + buildBuildVersion + " VersionNo "+buildVersionNo+")\n\n" +
                                         "应用大小：" + String.format("%.2f", buildFileSize / 1024. / 1024.0) + " MB\n\n" +
                                         "更新时间：" + buildUpdated + "\n\n" +
                                         "更新内容：" + buildUpdateDescription.replaceAll("\n", "\n\n") + "\n\n" +
