@@ -65,6 +65,7 @@ public class CodePushAction extends AnAction {
                     {
                         commandLine.addParameter("shorebird");
                     }
+                    String type=dialog.getTypeRadio();
                     String command=dialog.getCommandRadio();
 
                     if(Objects.equals(command, "reinit")){
@@ -74,12 +75,12 @@ public class CodePushAction extends AnAction {
                         commandLine.addParameter(command);
                     }
                     if(!command.equals("login") && !command.equals("init") && !command.equals("reinit")) {
-                        commandLine.addParameter(dialog.getTypeRadio());
+                        commandLine.addParameter(type);
 
                         if(dialog.isStaging()) {
                             commandLine.addParameter("--staging");
                         }
-                        if(dialog.isArtifact()) {
+                        if(dialog.isArtifact() && type.equals("android")) {
                             commandLine.addParameter("--artifact");
                             commandLine.addParameter("apk");
                         }
@@ -94,11 +95,12 @@ public class CodePushAction extends AnAction {
                         if(dialog.isDryRun()) {
                             commandLine.addParameter("--dry-run");
                         }
-                        if(dialog.isCodesignSelected())
-                        {
-                            commandLine.addParameter("--codesign");
-                        }else{
-                            commandLine.addParameter("--no-codesign");
+                        if(type.equals("ios")) {
+                            if (dialog.isCodesignSelected()) {
+                                commandLine.addParameter("--codesign");
+                            } else {
+                                commandLine.addParameter("--no-codesign");
+                            }
                         }
                         // 检查flavor是否不为空或特定条件满足
                         if (flavor != null && !flavor.isEmpty()) {
